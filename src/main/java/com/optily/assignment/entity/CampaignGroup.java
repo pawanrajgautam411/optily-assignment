@@ -1,10 +1,19 @@
 package com.optily.assignment.entity;
 
+import javax.persistence.*;
+
 /**
  *
  */
+@Entity
+@Table(name = "campaign_group")
 public class CampaignGroup {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "name")
     private String name;
 
     public long getId() {

@@ -1,16 +1,33 @@
 package com.optily.assignment.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
  *
  */
+@Entity
+@Table(name = "campaign")
 public class Campaign {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "impressions")
     private long impressions;
+
+    @Column(name = "budget")
     private BigDecimal budget;
+
+    @Column(name = "revenue")
     private BigDecimal revenue;
+
+    @ManyToOne
+    @JoinColumn(name = "campaign_group_id")
     private CampaignGroup campaignGroup;
 
     public long getId() {

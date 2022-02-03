@@ -1,6 +1,7 @@
 package com.optily.assignment.controller;
 
 import com.optily.assignment.api.CampaignGroupService;
+import com.optily.assignment.entity.CampaignGroup;
 import com.optily.assignment.vo.ResponseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -31,15 +29,26 @@ public class CampaignGroupController {
      * @param multipartFile
      * @return
      */
-    @PostMapping("/upload_file")
-    public ResponseEntity<ResponseVo> uploadCampaignCSV(
+    @PostMapping("/create")
+    public ResponseEntity<ResponseVo> createCampaignGroup(
             @RequestPart("file") MultipartFile multipartFile,
             @RequestParam("campaign_group_name") String campaignGroupName) {
 
         File file = new MultipartUtil().extractFile(multipartFile, campaignGroupName);
-        campaignGroupService.uploadCSV(file, campaignGroupName);
+        CampaignGroup campaignGroup = campaignGroupService.createNow(file, campaignGroupName);
 
-        return new ResponseEntity<>(new ResponseVo("file-uploaded-successfully"),
+        return new ResponseEntity<>(new ResponseVo(campaignGroup),
                 HttpStatus.OK);
     }
+
+    /**
+     * @return
+     */
+    @GetMapping("/find_all")
+    @ResponseBody
+    public ResponseEntity<ResponseVo> findAllCampaigns() {
+        return new ResponseEntity<>(new ResponseVo(campaignGroupService.findAll()),
+                HttpStatus.OK);
+    }
+
 }

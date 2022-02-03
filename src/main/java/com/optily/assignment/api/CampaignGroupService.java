@@ -3,7 +3,7 @@ package com.optily.assignment.api;
 import com.optily.assignment.entity.CampaignGroup;
 
 import java.io.File;
-import java.io.InputStream;
+import java.util.List;
 
 /**
  *
@@ -15,5 +15,10 @@ public interface CampaignGroupService {
      * @param campaignGroupName
      * @return
      */
-    CampaignGroup uploadCSV(File file, String campaignGroupName);
+    CampaignGroup createNow(File file, String campaignGroupName);
+
+    /**
+     * @return
+     */
+    List<CampaignGroup> findAll();
 }
