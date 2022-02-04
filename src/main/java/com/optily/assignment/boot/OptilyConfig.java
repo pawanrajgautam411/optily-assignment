@@ -2,8 +2,12 @@ package com.optily.assignment.boot;
 
 import com.optily.assignment.api.CampaignGroupService;
 import com.optily.assignment.api.CampaignService;
+import com.optily.assignment.api.OptimisationService;
+import com.optily.assignment.api.RecommendationService;
 import com.optily.assignment.service.CampaignGroupServiceImpl;
 import com.optily.assignment.service.CampaignServiceImpl;
+import com.optily.assignment.service.OptimisationServiceImpl;
+import com.optily.assignment.service.RecommendationServiceImpl;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -42,6 +46,23 @@ public class OptilyConfig {
     @Bean
     public CampaignService campaignService() {
         return new CampaignServiceImpl();
+    }
+
+    /**
+     * @return
+     */
+    @Bean
+    public OptimisationService optimisationService() {
+        return new OptimisationServiceImpl();
+    }
+
+
+    /**
+     * @return
+     */
+    @Bean
+    public RecommendationService recommendationService() {
+        return new RecommendationServiceImpl();
     }
 
     /**

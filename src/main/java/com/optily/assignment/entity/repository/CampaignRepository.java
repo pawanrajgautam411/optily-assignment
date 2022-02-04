@@ -14,11 +14,4 @@ import java.util.List;
 @Repository
 public interface CampaignRepository extends CrudRepository<Campaign, Long> {
 
-    /**
-     * @param campaignGroup
-     * @return
-     */
-    @Query("select cp from Campaign cp where campaignGroup = :campaignGroup")
-    List<Campaign> findByCampaignGroupId(CampaignGroup campaignGroup);
-
 }

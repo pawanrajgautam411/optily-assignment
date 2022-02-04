@@ -51,4 +51,14 @@ public class CampaignGroupController {
                 HttpStatus.OK);
     }
 
+    /**
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<ResponseVo> findByCampaignGroupId(@PathVariable long id) {
+        return new ResponseEntity<>(new ResponseVo(campaignGroupService.findById(id)),
+                HttpStatus.OK);
+    }
+
 }

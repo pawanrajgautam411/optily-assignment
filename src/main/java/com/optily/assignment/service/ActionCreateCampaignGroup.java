@@ -46,12 +46,10 @@ class ActionCreateCampaignGroup {
 
         CampaignGroup campaignGroup = new CampaignGroup();
         campaignGroup.setName(campaignGroupName);
+        campaignGroup.setCampaigns(campaigns);
 
         BeanFactory.getCampaignGroupRepository().save(campaignGroup);
 
-        campaigns.stream().forEach(campaign -> campaign.setCampaignGroup(campaignGroup));
-
-        BeanFactory.getCampaignRepository().saveAll(campaigns);
         return campaignGroup;
     }
 

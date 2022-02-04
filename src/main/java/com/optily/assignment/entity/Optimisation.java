@@ -1,13 +1,21 @@
 package com.optily.assignment.entity;
 
+import javax.persistence.*;
+
 /**
  *
  */
+@Entity
+@Table(name = "optimisation")
 public class Optimisation {
-    private long id;
-    private String status;
-    private CampaignGroup campaignGroup;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "status")
+    private String status;
+    
     public long getId() {
         return id;
     }
@@ -24,11 +32,4 @@ public class Optimisation {
         this.status = status;
     }
 
-    public CampaignGroup getCampaignGroup() {
-        return campaignGroup;
-    }
-
-    public void setCampaignGroup(CampaignGroup campaignGroup) {
-        this.campaignGroup = campaignGroup;
-    }
 }

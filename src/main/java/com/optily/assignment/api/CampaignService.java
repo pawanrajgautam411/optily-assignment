@@ -15,9 +15,4 @@ public interface CampaignService {
     List<Campaign> findAll();
 
 
-    /**
-     * @param campaignGroupId
-     * @return
-     */
-    List<Campaign> findByCampaignGroupId(long campaignGroupId);
 }

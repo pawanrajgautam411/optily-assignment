@@ -26,10 +26,6 @@ public class Campaign {
     @Column(name = "revenue")
     private BigDecimal revenue;
 
-    @ManyToOne
-    @JoinColumn(name = "campaign_group_id")
-    private CampaignGroup campaignGroup;
-
     public long getId() {
         return id;
     }
@@ -69,13 +65,5 @@ public class Campaign {
     public void setRevenue(BigDecimal revenue) {
         this.revenue = revenue;
     }
-
-    public CampaignGroup getCampaignGroup() {
-        return campaignGroup;
-    }
-
-    public void setCampaignGroup(CampaignGroup campaignGroup) {
-        this.campaignGroup = campaignGroup;
-    }
-
+    
 }

@@ -1,15 +1,29 @@
 package com.optily.assignment.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
  *
  */
+@Entity
+@Table(name = "recommendation")
 public class Recommendation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "optimisation_id")
     private Optimisation optimisation;
+
+    @ManyToOne
+    @JoinColumn(name = "campaign_id")
     private Campaign campaign;
-    private BigDecimal budget;
+
+    @Column(name = "recommendedBudget")
+    private BigDecimal recommendedBudget;
 
     public long getId() {
         return id;
@@ -35,11 +49,11 @@ public class Recommendation {
         this.campaign = campaign;
     }
 
-    public BigDecimal getBudget() {
-        return budget;
+    public BigDecimal getRecommendedBudget() {
+        return recommendedBudget;
     }
 
-    public void setBudget(BigDecimal budget) {
-        this.budget = budget;
+    public void setRecommendedBudget(BigDecimal recommendedBudget) {
+        this.recommendedBudget = recommendedBudget;
     }
 }

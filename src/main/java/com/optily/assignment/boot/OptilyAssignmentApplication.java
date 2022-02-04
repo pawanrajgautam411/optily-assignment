@@ -12,8 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan({"com.optily.assignment.boot",
         "com.optily.assignment.controller",
-        "com.optily.assignment.entity",
-        "com.optily.assignment.entity.repository"})
+        "com.optily.assignment.entity"})
 @SpringBootApplication
 public class OptilyAssignmentApplication {
 

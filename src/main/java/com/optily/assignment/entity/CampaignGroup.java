@@ -1,6 +1,7 @@
 package com.optily.assignment.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  *
@@ -16,6 +17,14 @@ public class CampaignGroup {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "campaign_group_id")
+    private List<Campaign> campaigns;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "campaign_group_id")
+    private List<Optimisation> optimisations;
+
     public long getId() {
         return id;
     }
@@ -30,5 +39,21 @@ public class CampaignGroup {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Campaign> getCampaigns() {
+        return campaigns;
+    }
+
+    public void setCampaigns(List<Campaign> campaigns) {
+        this.campaigns = campaigns;
+    }
+
+    public List<Optimisation> getOptimisations() {
+        return optimisations;
+    }
+
+    public void setOptimisations(List<Optimisation> optimisations) {
+        this.optimisations = optimisations;
     }
 }

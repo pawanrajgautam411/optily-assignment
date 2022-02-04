@@ -21,4 +21,8 @@ public interface CampaignGroupService {
      * @return
      */
     List<CampaignGroup> findAll();
+
+
+    CampaignGroup findById(long id);
+
 }

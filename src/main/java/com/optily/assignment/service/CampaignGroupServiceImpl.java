@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,7 +18,6 @@ import java.util.stream.StreamSupport;
 public class CampaignGroupServiceImpl implements CampaignGroupService {
     private static final Logger LOGGER = LoggerFactory
             .getLogger(CampaignGroupServiceImpl.class);
-
 
     /**
      * @param file
@@ -29,7 +29,6 @@ public class CampaignGroupServiceImpl implements CampaignGroupService {
         return new ActionCreateCampaignGroup().createNow(file, campaignGroupName);
     }
 
-
     /**
      * @return
      */
@@ -38,5 +37,20 @@ public class CampaignGroupServiceImpl implements CampaignGroupService {
         Iterable<CampaignGroup> iterable = BeanFactory.getCampaignGroupRepository().findAll();
         return StreamSupport.stream(iterable.spliterator(), false)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public CampaignGroup findById(long id) {
+        Optional<CampaignGroup> optionalCampaignGroup = BeanFactory.getCampaignGroupRepository()
+                .findById(id);
+
+        if (optionalCampaignGroup.isPresent()) {
+            return optionalCampaignGroup.get();
+        }
+        return null;
     }
 }
