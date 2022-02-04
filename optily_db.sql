@@ -31,17 +31,8 @@ CREATE TABLE `campaign` (
   `campaign_group_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK7digsvjx1jyl4gxr9yudonetk` (`campaign_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `campaign`
---
-
-LOCK TABLES `campaign` WRITE;
-/*!40000 ALTER TABLE `campaign` DISABLE KEYS */;
-/*!40000 ALTER TABLE `campaign` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `campaign_group`
@@ -54,41 +45,8 @@ CREATE TABLE `campaign_group` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `campaign_group`
---
-
-LOCK TABLES `campaign_group` WRITE;
-/*!40000 ALTER TABLE `campaign_group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `campaign_group` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `campaign_group_optimisation`
---
-
-DROP TABLE IF EXISTS `campaign_group_optimisation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `campaign_group_optimisation` (
-  `CampaignGroup_id` bigint(20) NOT NULL,
-  `optimisations_id` bigint(20) NOT NULL,
-  UNIQUE KEY `UK_b9vrsyjvaic5anir2smitqk2m` (`optimisations_id`),
-  KEY `FK4hehoqivx357pxbnjb01asivi` (`CampaignGroup_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `campaign_group_optimisation`
---
-
-LOCK TABLES `campaign_group_optimisation` WRITE;
-/*!40000 ALTER TABLE `campaign_group_optimisation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `campaign_group_optimisation` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `optimisation`
@@ -99,19 +57,30 @@ DROP TABLE IF EXISTS `optimisation`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `optimisation` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `status` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `status` varchar(255) DEFAULT NULL,
+  `campaign_group_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKdcvsdjkn5r49xe0fa3e4dglue` (`campaign_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `optimisation`
+-- Table structure for table `recommendation`
 --
 
-LOCK TABLES `optimisation` WRITE;
-/*!40000 ALTER TABLE `optimisation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `optimisation` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `recommendation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recommendation` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `recommendedBudget` decimal(19,2) DEFAULT NULL,
+  `campaign_id` bigint(20) DEFAULT NULL,
+  `optimisation_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKr6n2jub345s1i5n1nj65h47wq` (`campaign_id`),
+  KEY `FKc2hxlh20c2dpcqnu7w3p9hyxw` (`optimisation_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -122,4 +91,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-04  1:58:35
+-- Dump completed on 2022-02-05  1:46:02
