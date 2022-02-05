@@ -31,7 +31,7 @@ CREATE TABLE `campaign` (
   `campaign_group_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK7digsvjx1jyl4gxr9yudonetk` (`campaign_group_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `campaign_group` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,11 +57,12 @@ DROP TABLE IF EXISTS `optimisation`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `optimisation` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `optimisation_type` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `campaign_group_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKdcvsdjkn5r49xe0fa3e4dglue` (`campaign_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +80,7 @@ CREATE TABLE `recommendation` (
   PRIMARY KEY (`id`),
   KEY `FKr6n2jub345s1i5n1nj65h47wq` (`campaign_id`),
   KEY `FKc2hxlh20c2dpcqnu7w3p9hyxw` (`optimisation_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -91,4 +92,4 @@ CREATE TABLE `recommendation` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-05  1:46:02
+-- Dump completed on 2022-02-05 22:54:42
