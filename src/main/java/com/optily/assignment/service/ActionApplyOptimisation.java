@@ -5,17 +5,12 @@ import com.optily.assignment.api.OptimisationScheme;
 import com.optily.assignment.api.SchemeInput;
 import com.optily.assignment.api.SchemeOutput;
 import com.optily.assignment.boot.RepositoryBeanFactory;
-import com.optily.assignment.entity.Campaign;
 import com.optily.assignment.entity.CampaignGroup;
-import com.optily.assignment.entity.Optimisation;
-import com.optily.assignment.entity.Recommendation;
 import com.optily.assignment.exception.ApplyOptimisationFailedException;
 import com.optily.assignment.optimization.OptimisationType;
-import com.optily.assignment.vo.RecommendationVo;
+import com.optily.assignment.vo.RecommendationResponseVo;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -33,8 +28,8 @@ class ActionApplyOptimisation {
      * @param optimisation_type
      * @return
      */
-    public RecommendationVo applyNow(long campaignGroupId,
-                                     String optimisation_type) {
+    public RecommendationResponseVo applyNow(long campaignGroupId,
+                                             String optimisation_type) {
 
         Optional<CampaignGroup> optionalCampaignGroup = RepositoryBeanFactory.getCampaignGroupRepository()
                 .findById(campaignGroupId);
@@ -60,10 +55,12 @@ class ActionApplyOptimisation {
         }
 
         if (campaignGroupDB.getOptimisations() != null) {
-            boolean applied = campaignGroupDB.getOptimisations().stream().anyMatch(optimisation ->
-                    optimisation.getOptimisationType().equalsIgnoreCase(optimisation_type)
-                            && optimisation.getStatus().equalsIgnoreCase("APPLIED"));
-            if (applied) {
+            boolean isApplied = campaignGroupDB.getOptimisations()
+                    .stream()
+                    .anyMatch(optimisation ->
+                            optimisation.getOptimisationType().equalsIgnoreCase(optimisation_type)
+                                    && optimisation.getStatus().equalsIgnoreCase("APPLIED"));
+            if (isApplied) {
                 throw new ApplyOptimisationFailedException("optimisation-type ("
                         + optimisation_type + ") already-applied");
             }
@@ -84,9 +81,9 @@ class ActionApplyOptimisation {
         }
 
         try {
-            RecommendationVo recommendationVo = new RecommendationVo();
-            recommendationVo.setCampaign_group_id(campaignGroupDB.getId());
-            recommendationVo.setCampaign_group_name(campaignGroupDB.getName());
+            RecommendationResponseVo recommendationResponseVo = new RecommendationResponseVo();
+            recommendationResponseVo.setCampaign_group_id(campaignGroupDB.getId());
+            recommendationResponseVo.setCampaign_group_name(campaignGroupDB.getName());
 
             DefaultSchemeInputImpl schemeInput = SchemeInput.defaultSchemeInput();
             schemeInput.setCampaigns(campaignGroupDB.getCampaigns());
@@ -95,14 +92,14 @@ class ActionApplyOptimisation {
             OptimisationScheme optimisationScheme = schemeClass.newInstance();
             SchemeOutput schemeOutput = optimisationScheme.recommendNow(schemeInput);
 
-            List<Recommendation> listOfRecommendations = schemeOutput.getRecommendations();
+//            List<Recommendation> listOfRecommendations = schemeOutput.getRecommendations();
+//
+//            recommendationResponseVo.setOptimisation_type(optimisationType.name());
+//            recommendationResponseVo.setRecommendations(listOfRecommendations);
+//
+//            insertIntoDB(recommendationResponseVo, campaignGroupDB);
 
-            recommendationVo.setOptimisation_type(optimisationType.name());
-            recommendationVo.setRecommendations(listOfRecommendations);
-
-            insertIntoDB(recommendationVo, campaignGroupDB);
-
-            return recommendationVo;
+            return recommendationResponseVo;
 
         } catch (Throwable e) {
             e.printStackTrace();
@@ -112,30 +109,30 @@ class ActionApplyOptimisation {
     }
 
     /**
-     * @param recommendationVo
+     * @param recommendationResponseVo
      * @param campaignGroupDB
      */
-    private void insertIntoDB(RecommendationVo recommendationVo,
+    private void insertIntoDB(RecommendationResponseVo recommendationResponseVo,
                               CampaignGroup campaignGroupDB) {
 
-        Optimisation optimisation = new Optimisation();
-        optimisation.setStatus("APPLIED");
-        optimisation.setOptimisationType(recommendationVo.getOptimisation_type());
-
-        campaignGroupDB.getOptimisations().clear();
-        campaignGroupDB.getOptimisations().add(optimisation);
-
-        List<Campaign> finalListOfCampaigns = recommendationVo.getRecommendations()
-                .stream()
-                .map(recommendation -> {
-                    recommendation.getCampaign()
-                            .setBudget(recommendation.getRecommendedBudget());
-                    return recommendation.getCampaign();
-                }).
-                collect(Collectors.toList());
-
-        campaignGroupDB.getCampaigns().clear();
-        campaignGroupDB.getCampaigns().addAll(finalListOfCampaigns);
-        RepositoryBeanFactory.getCampaignGroupRepository().save(campaignGroupDB);
+//        Optimisation optimisation = new Optimisation();
+//        optimisation.setStatus("APPLIED");
+//        optimisation.setOptimisationType(recommendationResponseVo.getOptimisation_type());
+//
+//        campaignGroupDB.getOptimisations().clear();
+//        campaignGroupDB.getOptimisations().add(optimisation);
+//
+//        List<Campaign> finalListOfCampaigns = recommendationResponseVo.getRecommendations()
+//                .stream()
+//                .map(recommendation -> {
+//                    recommendation.getCampaign()
+//                            .setBudget(recommendation.getRecommendedBudget());
+//                    return recommendation.getCampaign();
+//                }).
+//                collect(Collectors.toList());
+//
+//        campaignGroupDB.getCampaigns().clear();
+//        campaignGroupDB.getCampaigns().addAll(finalListOfCampaigns);
+//        RepositoryBeanFactory.getCampaignGroupRepository().save(campaignGroupDB);
     }
 }

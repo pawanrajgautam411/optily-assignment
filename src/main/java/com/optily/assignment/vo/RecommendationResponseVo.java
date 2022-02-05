@@ -1,17 +1,16 @@
 package com.optily.assignment.vo;
 
-import com.optily.assignment.entity.Recommendation;
+import com.optily.assignment.entity.Optimisation;
 
 import java.util.List;
 
 /**
  *
  */
-public class RecommendationVo {
+public class RecommendationResponseVo {
     private long campaign_group_id;
     private String campaign_group_name;
-    private String optimisation_type;
-    private List<Recommendation> recommendations;
+    private List<RecommendCampaignVo> recommendations;
 
     public long getCampaign_group_id() {
         return campaign_group_id;
@@ -29,19 +28,11 @@ public class RecommendationVo {
         this.campaign_group_name = campaign_group_name;
     }
 
-    public String getOptimisation_type() {
-        return optimisation_type;
-    }
-
-    public void setOptimisation_type(String optimisation_type) {
-        this.optimisation_type = optimisation_type;
-    }
-
-    public List<Recommendation> getRecommendations() {
+    public List<RecommendCampaignVo> getRecommendations() {
         return recommendations;
     }
 
-    public void setRecommendations(List<Recommendation> recommendations) {
+    public void setRecommendations(List<RecommendCampaignVo> recommendations) {
         this.recommendations = recommendations;
     }
 }

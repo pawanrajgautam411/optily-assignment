@@ -4,7 +4,7 @@ import com.optily.assignment.api.OptimisationService;
 import com.optily.assignment.boot.RepositoryBeanFactory;
 import com.optily.assignment.entity.CampaignGroup;
 import com.optily.assignment.entity.Optimisation;
-import com.optily.assignment.vo.RecommendationVo;
+import com.optily.assignment.vo.RecommendationResponseVo;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +20,8 @@ public class OptimisationServiceImpl implements OptimisationService {
      * @return
      */
     @Override
-    public RecommendationVo applyOptimisation(long campaignGroupId,
-                                              String optimisation_type) {
+    public RecommendationResponseVo applyOptimisation(long campaignGroupId,
+                                                      String optimisation_type) {
 
         return new ActionApplyOptimisation().applyNow(campaignGroupId, optimisation_type);
     }
@@ -47,7 +47,8 @@ public class OptimisationServiceImpl implements OptimisationService {
      */
     @Override
     public Optimisation findById(long id) {
-        Optional<Optimisation> optional = RepositoryBeanFactory.getOptimisationRepository().findById(id);
+        Optional<Optimisation> optional = RepositoryBeanFactory.getOptimisationRepository()
+                .findById(id);
         if (optional.isPresent()) {
             return optional.get();
         }

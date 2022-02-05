@@ -1,6 +1,6 @@
 package com.optily.assignment.api;
 
-import com.optily.assignment.vo.RecommendationVo;
+import com.optily.assignment.vo.RecommendationResponseVo;
 
 /**
  *
@@ -11,5 +11,11 @@ public interface RecommendationService {
      * @param campaignGroupId
      * @return
      */
-    RecommendationVo findByCampaignGroupId(long campaignGroupId);
+    RecommendationResponseVo generate(long campaignGroupId);
+
+    /**
+     * @param campaignGroupId
+     * @return
+     */
+    RecommendationResponseVo findByCampaignGroupId(long campaignGroupId);
 }

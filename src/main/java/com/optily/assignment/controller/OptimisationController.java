@@ -2,7 +2,7 @@ package com.optily.assignment.controller;
 
 import com.optily.assignment.api.OptimisationService;
 import com.optily.assignment.vo.OptimisationRequestVo;
-import com.optily.assignment.vo.RecommendationVo;
+import com.optily.assignment.vo.RecommendationResponseVo;
 import com.optily.assignment.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,10 +28,10 @@ public class OptimisationController {
     public ResponseEntity<ResponseVo> applyRecommendation(
             @RequestBody OptimisationRequestVo optimisationRequestVo) {
 
-        RecommendationVo recommendationVo = optimisationService.applyOptimisation(optimisationRequestVo.getCampaign_group_id(),
+        RecommendationResponseVo recommendationResponseVo = optimisationService.applyOptimisation(optimisationRequestVo.getCampaign_group_id(),
                 optimisationRequestVo.getOptimisation_type());
 
-        return new ResponseEntity<>(new ResponseVo(recommendationVo), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseVo(recommendationResponseVo), HttpStatus.OK);
     }
 
     /**

@@ -49,7 +49,8 @@ public class CampaignServiceImpl implements CampaignService {
      */
     @Override
     public Campaign findById(long id) {
-        Optional<Campaign> optional = RepositoryBeanFactory.getCampaignRepository().findById(id);
+        Optional<Campaign> optional = RepositoryBeanFactory.getCampaignRepository()
+                .findById(id);
         if (optional.isPresent()) {
             return optional.get();
         }

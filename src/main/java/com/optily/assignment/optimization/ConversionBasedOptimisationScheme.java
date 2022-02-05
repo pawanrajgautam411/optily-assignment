@@ -5,10 +5,11 @@ import com.optily.assignment.api.SchemeInput;
 import com.optily.assignment.api.SchemeOutput;
 import com.optily.assignment.entity.Campaign;
 import com.optily.assignment.entity.Recommendation;
+import com.optily.assignment.vo.RecommendCampaignVo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -23,17 +24,23 @@ public class ConversionBasedOptimisationScheme implements OptimisationScheme {
     public SchemeOutput recommendNow(SchemeInput schemeInput) {
         List<Campaign> campaignList = schemeInput.getCampaigns();
 
-        List<Recommendation> recommendations = campaignList.stream()
-                .map(campaign -> {
+        RecommendCampaignVo recommendCampaignVo = new RecommendCampaignVo();
+        recommendCampaignVo.setOptimisation_type(OptimisationType.Conversion_Based_Optimisation.name());
+        recommendCampaignVo.setCampaigns(new ArrayList<>());
+
+
+        campaignList
+                .stream()
+                .forEach(campaign -> {
                     Recommendation recommendation = new Recommendation();
                     recommendation.setRecommendedBudget(campaign.getBudget().add(BigDecimal.ONE));
                     recommendation.setCampaign(campaign);
-                    return recommendation;
+                    recommendCampaignVo.getCampaigns().add(recommendation);
 
-                }).collect(Collectors.toList());
+                });
 
         ImpressionSchemeOutput impressionSchemeOutput = new ImpressionSchemeOutput();
-        impressionSchemeOutput.setRecommendations(recommendations);
+        impressionSchemeOutput.setRecommendations(recommendCampaignVo);
 
         return impressionSchemeOutput;
     }

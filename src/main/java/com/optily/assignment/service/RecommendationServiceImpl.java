@@ -3,15 +3,15 @@ package com.optily.assignment.service;
 import com.optily.assignment.api.*;
 import com.optily.assignment.boot.RepositoryBeanFactory;
 import com.optily.assignment.entity.CampaignGroup;
-import com.optily.assignment.entity.Recommendation;
+import com.optily.assignment.entity.Optimisation;
+import com.optily.assignment.optimization.ClickBasedOptimisationScheme;
+import com.optily.assignment.optimization.ConversionBasedOptimisationScheme;
 import com.optily.assignment.optimization.ImpressionBasedOptimisationScheme;
 import com.optily.assignment.optimization.OptimisationType;
-import com.optily.assignment.vo.RecommendationVo;
+import com.optily.assignment.vo.RecommendCampaignVo;
+import com.optily.assignment.vo.RecommendationResponseVo;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -23,8 +23,8 @@ public class RecommendationServiceImpl implements RecommendationService {
     static {
         SCHEME_MAP = new HashMap<>();
         SCHEME_MAP.put(OptimisationType.Impression_Based_Optimisation, ImpressionBasedOptimisationScheme.class);
-        //SCHEME_MAP.put(OptimisationType.Click_Based_Optimisation, ClickBasedOptimisationScheme.class);
-        //SCHEME_MAP.put(OptimisationType.Conversion_Based_Optimisation, ConversionBasedOptimisationScheme.class);
+        SCHEME_MAP.put(OptimisationType.Click_Based_Optimisation, ClickBasedOptimisationScheme.class);
+        SCHEME_MAP.put(OptimisationType.Conversion_Based_Optimisation, ConversionBasedOptimisationScheme.class);
     }
 
     /**
@@ -32,7 +32,17 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @return
      */
     @Override
-    public RecommendationVo findByCampaignGroupId(long campaignGroupId) {
+    public RecommendationResponseVo generate(long campaignGroupId) {
+        return new ActionGenerateRecommendation().generateNow(campaignGroupId);
+    }
+
+
+    /**
+     * @param campaignGroupId
+     * @return
+     */
+    @Override
+    public RecommendationResponseVo findByCampaignGroupId(long campaignGroupId) {
         Optional<CampaignGroup> optionalCampaignGroup = RepositoryBeanFactory.getCampaignGroupRepository()
                 .findById(campaignGroupId);
 
@@ -41,45 +51,49 @@ public class RecommendationServiceImpl implements RecommendationService {
                     + campaignGroupId + ")");
         }
 
-        CampaignGroup campaignGroup = optionalCampaignGroup.get();
+        CampaignGroup campaignGroupDB = optionalCampaignGroup.get();
 
-        RecommendationVo recommendationVo = new RecommendationVo();
-        recommendationVo.setCampaign_group_id(campaignGroup.getId());
-        recommendationVo.setCampaign_group_name(campaignGroup.getName());
+        if (campaignGroupDB.getOptimisations() == null
+                || campaignGroupDB.getOptimisations().size() <= 0) {
+            return new ActionGenerateRecommendation().generateNow(campaignGroupId);
+        }
 
-        DefaultSchemeInputImpl schemeInput = SchemeInput.defaultSchemeInput();
-        schemeInput.setCampaigns(campaignGroup.getCampaigns());
-        schemeInput.setCampaignGroup(campaignGroup);
-
-        List<String> appliedOptimisationTypes = campaignGroup.getOptimisations().stream()
-                .map(optimisation -> optimisation.getOptimisationType())
+        List<Optimisation> optimisations = campaignGroupDB.getOptimisations()
+                .stream()
+                .filter(optimisation -> optimisation.getStatus().equalsIgnoreCase(
+                        "NOT_APPLIED"))
                 .collect(Collectors.toList());
 
 
-        SCHEME_MAP.forEach((key, value) -> {
+        if (optimisations.size() <= 0) {
+            return null;
+        }
+
+        RecommendationResponseVo recommendationResponseVo = new RecommendationResponseVo();
+        recommendationResponseVo.setCampaign_group_id(campaignGroupDB.getId());
+        recommendationResponseVo.setCampaign_group_name(campaignGroupDB.getName());
+        recommendationResponseVo.setRecommendations(new ArrayList<>());
+
+        optimisations.forEach(optimisation -> {
             try {
+                DefaultSchemeInputImpl schemeInput = SchemeInput.defaultSchemeInput();
+                schemeInput.setCampaigns(campaignGroupDB.getCampaigns());
+                schemeInput.setCampaignGroup(campaignGroupDB);
 
-                if (!appliedOptimisationTypes.contains(key.name())) {
-                    OptimisationScheme optimisationScheme = value.newInstance();
-                    SchemeOutput schemeOutput = optimisationScheme.recommendNow(schemeInput);
+                Class<? extends OptimisationScheme> optimisationSchemeClass = SCHEME_MAP
+                        .get(OptimisationType.valueOf(optimisation.getOptimisationType()));
 
-                    List<Recommendation> listOfRecommendations = schemeOutput.getRecommendations();
+                OptimisationScheme optimisationScheme = optimisationSchemeClass.newInstance();
+                SchemeOutput schemeOutput = optimisationScheme.recommendNow(schemeInput);
 
-                    recommendationVo.setOptimisation_type(key.name());
-                    recommendationVo.setRecommendations(listOfRecommendations);
-                }
+                RecommendCampaignVo recommendCampaignVo = schemeOutput.getRecommendations();
+                recommendationResponseVo.getRecommendations().add(recommendCampaignVo);
 
             } catch (Throwable e) {
                 e.printStackTrace();
             }
         });
 
-
-        if (recommendationVo.getRecommendations() == null
-                || recommendationVo.getRecommendations().size() <= 0) {
-            return null;
-        }
-        return recommendationVo;
+        return recommendationResponseVo;
     }
-
 }

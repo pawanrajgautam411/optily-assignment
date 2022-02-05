@@ -35,8 +35,11 @@ public class CampaignGroupServiceImpl implements CampaignGroupService {
     @Override
     public List<CampaignGroup> findAll() {
         Iterable<CampaignGroup> iterable = RepositoryBeanFactory.getCampaignGroupRepository().findAll();
-        return StreamSupport.stream(iterable.spliterator(), false)
+        List<CampaignGroup> campaignGroups = StreamSupport.stream(iterable.spliterator(), false)
                 .collect(Collectors.toList());
+
+        campaignGroups.forEach(campaignGroup -> campaignGroup.setOptimisations(null));
+        return campaignGroups;
     }
 
     /**
@@ -49,7 +52,9 @@ public class CampaignGroupServiceImpl implements CampaignGroupService {
                 .findById(id);
 
         if (optional.isPresent()) {
-            return optional.get();
+            CampaignGroup campaignGroup = optional.get();
+            campaignGroup.setOptimisations(null);
+            return campaignGroup;
         }
         return null;
     }

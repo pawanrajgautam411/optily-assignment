@@ -1,7 +1,7 @@
 package com.optily.assignment.api;
 
 import com.optily.assignment.entity.Optimisation;
-import com.optily.assignment.vo.RecommendationVo;
+import com.optily.assignment.vo.RecommendationResponseVo;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface OptimisationService {
      * @param optimisationType
      * @return
      */
-    RecommendationVo applyOptimisation(long campaignGroupId, String optimisationType);
+    RecommendationResponseVo applyOptimisation(long campaignGroupId, String optimisationType);
 
     /**
      * @param campaignGroupId
