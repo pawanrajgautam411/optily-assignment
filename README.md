@@ -32,3 +32,5 @@ Maven install will also be required to build the final runnable spring boot appl
 ### 2.3 SpringBootApplication class
 The startup class known as SpringBootApplication is located at `com/optily/assignment/boot/OptilyAssignmentApplication.java`
 
+### 2.4 Run Command
+Execute command `java -jar target/optily-assignment-v1.jar`
