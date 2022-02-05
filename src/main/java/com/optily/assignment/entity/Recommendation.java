@@ -15,10 +15,6 @@ public class Recommendation {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "optimisation_id")
-    private Optimisation optimisation;
-
-    @ManyToOne
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
@@ -31,14 +27,6 @@ public class Recommendation {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Optimisation getOptimisation() {
-        return optimisation;
-    }
-
-    public void setOptimisation(Optimisation optimisation) {
-        this.optimisation = optimisation;
     }
 
     public Campaign getCampaign() {

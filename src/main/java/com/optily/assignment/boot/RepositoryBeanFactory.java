@@ -8,13 +8,13 @@ import com.optily.assignment.entity.repository.RecommendationRepository;
 /**
  *
  */
-public class BeanFactory {
+public class RepositoryBeanFactory {
     private static CampaignGroupRepository campaignGroupRepository;
     private static CampaignRepository campaignRepository;
     private static OptimisationRepository optimisationRepository;
     private static RecommendationRepository recommendationRepository;
 
-    private BeanFactory() {
+    private RepositoryBeanFactory() {
     }
 
     /**
@@ -25,7 +25,7 @@ public class BeanFactory {
     }
 
     protected static void setCampaignRepository(CampaignRepository campaignRepository) {
-        BeanFactory.campaignRepository = campaignRepository;
+        RepositoryBeanFactory.campaignRepository = campaignRepository;
     }
 
     /**
@@ -36,7 +36,7 @@ public class BeanFactory {
     }
 
     protected static void setCampaignGroupRepository(CampaignGroupRepository campaignGroupRepository) {
-        BeanFactory.campaignGroupRepository = campaignGroupRepository;
+        RepositoryBeanFactory.campaignGroupRepository = campaignGroupRepository;
     }
 
     /**
@@ -46,8 +46,8 @@ public class BeanFactory {
         return optimisationRepository;
     }
 
-    public static void setOptimisationRepository(OptimisationRepository optimisationRepository) {
-        BeanFactory.optimisationRepository = optimisationRepository;
+    protected static void setOptimisationRepository(OptimisationRepository optimisationRepository) {
+        RepositoryBeanFactory.optimisationRepository = optimisationRepository;
     }
 
     /**
@@ -57,7 +57,7 @@ public class BeanFactory {
         return recommendationRepository;
     }
 
-    public static void setRecommendationRepository(RecommendationRepository recommendationRepository) {
-        BeanFactory.recommendationRepository = recommendationRepository;
+    protected static void setRecommendationRepository(RecommendationRepository recommendationRepository) {
+        RepositoryBeanFactory.recommendationRepository = recommendationRepository;
     }
 }

@@ -25,7 +25,7 @@ public class RecommendationController {
     /**
      * @return
      */
-    @GetMapping("/{campaign_group_id}")
+    @GetMapping("/campaign_group/{campaign_group_id}")
     @ResponseBody
     public ResponseEntity<ResponseVo> getRecommendation(@PathVariable long campaign_group_id) {
         RecommendationVo recommendationVo = recommendationService

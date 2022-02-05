@@ -30,4 +30,25 @@ public class CampaignController {
         return new ResponseEntity<>(new ResponseVo(campaignService.findAll()), HttpStatus.OK);
     }
 
+
+    /**
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<ResponseVo> findById(@PathVariable("id") long id) {
+        return new ResponseEntity<>(new ResponseVo(campaignService.findById(id)),
+                HttpStatus.OK);
+    }
+
+    /**
+     * @return
+     */
+    @GetMapping("/campaign_group/{campaign_group_id}")
+    @ResponseBody
+    public ResponseEntity<ResponseVo> findByCampaignGroupId(@PathVariable("campaign_group_id") long campaignGroupId) {
+        return new ResponseEntity<>(new ResponseVo(campaignService.findByCampaignGroupId(campaignGroupId)),
+                HttpStatus.OK);
+    }
+
 }

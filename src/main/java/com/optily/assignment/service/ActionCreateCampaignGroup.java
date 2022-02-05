@@ -1,6 +1,6 @@
 package com.optily.assignment.service;
 
-import com.optily.assignment.boot.BeanFactory;
+import com.optily.assignment.boot.RepositoryBeanFactory;
 import com.optily.assignment.entity.Campaign;
 import com.optily.assignment.entity.CampaignGroup;
 import com.optily.assignment.exception.AlreadyExistException;
@@ -30,7 +30,7 @@ class ActionCreateCampaignGroup {
      */
     protected CampaignGroup createNow(File file, String campaignGroupName) {
 
-        List<CampaignGroup> byName = BeanFactory.getCampaignGroupRepository()
+        List<CampaignGroup> byName = RepositoryBeanFactory.getCampaignGroupRepository()
                 .findByName(campaignGroupName);
 
         if (byName != null && byName.size() > 0) {
@@ -48,7 +48,7 @@ class ActionCreateCampaignGroup {
         campaignGroup.setName(campaignGroupName);
         campaignGroup.setCampaigns(campaigns);
 
-        BeanFactory.getCampaignGroupRepository().save(campaignGroup);
+        RepositoryBeanFactory.getCampaignGroupRepository().save(campaignGroup);
 
         return campaignGroup;
     }

@@ -1,7 +1,7 @@
 package com.optily.assignment.service;
 
 import com.optily.assignment.api.CampaignGroupService;
-import com.optily.assignment.boot.BeanFactory;
+import com.optily.assignment.boot.RepositoryBeanFactory;
 import com.optily.assignment.entity.CampaignGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class CampaignGroupServiceImpl implements CampaignGroupService {
      */
     @Override
     public List<CampaignGroup> findAll() {
-        Iterable<CampaignGroup> iterable = BeanFactory.getCampaignGroupRepository().findAll();
+        Iterable<CampaignGroup> iterable = RepositoryBeanFactory.getCampaignGroupRepository().findAll();
         return StreamSupport.stream(iterable.spliterator(), false)
                 .collect(Collectors.toList());
     }
@@ -45,11 +45,11 @@ public class CampaignGroupServiceImpl implements CampaignGroupService {
      */
     @Override
     public CampaignGroup findById(long id) {
-        Optional<CampaignGroup> optionalCampaignGroup = BeanFactory.getCampaignGroupRepository()
+        Optional<CampaignGroup> optional = RepositoryBeanFactory.getCampaignGroupRepository()
                 .findById(id);
 
-        if (optionalCampaignGroup.isPresent()) {
-            return optionalCampaignGroup.get();
+        if (optional.isPresent()) {
+            return optional.get();
         }
         return null;
     }

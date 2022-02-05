@@ -2,6 +2,8 @@ package com.optily.assignment.boot;
 
 import com.optily.assignment.entity.repository.CampaignGroupRepository;
 import com.optily.assignment.entity.repository.CampaignRepository;
+import com.optily.assignment.entity.repository.OptimisationRepository;
+import com.optily.assignment.entity.repository.RecommendationRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -23,8 +25,11 @@ public class OptilyAssignmentApplication {
         ConfigurableApplicationContext applicationContext = SpringApplication
                 .run(OptilyAssignmentApplication.class, args);
 
-        BeanFactory.setCampaignRepository(applicationContext.getBean(CampaignRepository.class));
-        BeanFactory.setCampaignGroupRepository(applicationContext.getBean(CampaignGroupRepository.class));
+        RepositoryBeanFactory.setCampaignRepository(applicationContext.getBean(CampaignRepository.class));
+        RepositoryBeanFactory.setCampaignGroupRepository(applicationContext.getBean(CampaignGroupRepository.class));
+        RepositoryBeanFactory.setOptimisationRepository(applicationContext.getBean(OptimisationRepository.class));
+        RepositoryBeanFactory.setRecommendationRepository(applicationContext.getBean(RecommendationRepository.class));
+
     }
 
 }
