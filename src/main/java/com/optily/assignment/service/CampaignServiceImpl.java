@@ -15,7 +15,6 @@ import java.util.stream.StreamSupport;
  */
 public class CampaignServiceImpl implements CampaignService {
 
-
     /**
      * @return
      */

@@ -4,8 +4,6 @@ import com.optily.assignment.api.*;
 import com.optily.assignment.boot.RepositoryBeanFactory;
 import com.optily.assignment.entity.CampaignGroup;
 import com.optily.assignment.entity.Optimisation;
-import com.optily.assignment.optimization.ClickBasedOptimisationScheme;
-import com.optily.assignment.optimization.ConversionBasedOptimisationScheme;
 import com.optily.assignment.optimization.ImpressionBasedOptimisationScheme;
 import com.optily.assignment.optimization.OptimisationType;
 import com.optily.assignment.vo.RecommendCampaignVo;
@@ -23,8 +21,8 @@ public class RecommendationServiceImpl implements RecommendationService {
     static {
         SCHEME_MAP = new HashMap<>();
         SCHEME_MAP.put(OptimisationType.Impression_Based_Optimisation, ImpressionBasedOptimisationScheme.class);
-        SCHEME_MAP.put(OptimisationType.Click_Based_Optimisation, ClickBasedOptimisationScheme.class);
-        SCHEME_MAP.put(OptimisationType.Conversion_Based_Optimisation, ConversionBasedOptimisationScheme.class);
+//        SCHEME_MAP.put(OptimisationType.Click_Based_Optimisation, ClickBasedOptimisationScheme.class);
+//        SCHEME_MAP.put(OptimisationType.Conversion_Based_Optimisation, ConversionBasedOptimisationScheme.class);
     }
 
     /**
@@ -36,6 +34,18 @@ public class RecommendationServiceImpl implements RecommendationService {
         return new ActionGenerateRecommendation().generateNow(campaignGroupId);
     }
 
+
+    /**
+     * @param campaignGroupId
+     * @param optimisation_type
+     * @return
+     */
+    @Override
+    public Optimisation applyOptimisation(long campaignGroupId,
+                                          String optimisation_type) {
+
+        return new ActionApplyOptimisation().applyNow(campaignGroupId, optimisation_type);
+    }
 
     /**
      * @param campaignGroupId

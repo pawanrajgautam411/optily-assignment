@@ -4,7 +4,6 @@ import com.optily.assignment.api.OptimisationService;
 import com.optily.assignment.boot.RepositoryBeanFactory;
 import com.optily.assignment.entity.CampaignGroup;
 import com.optily.assignment.entity.Optimisation;
-import com.optily.assignment.vo.RecommendationResponseVo;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +12,7 @@ import java.util.Optional;
  *
  */
 public class OptimisationServiceImpl implements OptimisationService {
-
-    /**
-     * @param campaignGroupId
-     * @param optimisation_type
-     * @return
-     */
-    @Override
-    public RecommendationResponseVo applyOptimisation(long campaignGroupId,
-                                                      String optimisation_type) {
-
-        return new ActionApplyOptimisation().applyNow(campaignGroupId, optimisation_type);
-    }
-
+    
     /**
      * @param campaignGroupId
      * @return
@@ -36,7 +23,11 @@ public class OptimisationServiceImpl implements OptimisationService {
                 .findById(campaignGroupId);
 
         if (campaignGroup.isPresent()) {
-            return campaignGroup.get().getOptimisations();
+            List<Optimisation> optimisations = campaignGroup.get().getOptimisations();
+            if (optimisations != null && optimisations.size() > 0) {
+                optimisations.forEach(optimisation -> optimisation.setRecommendations(null));
+            }
+            return optimisations;
         }
         return null;
     }
@@ -50,7 +41,11 @@ public class OptimisationServiceImpl implements OptimisationService {
         Optional<Optimisation> optional = RepositoryBeanFactory.getOptimisationRepository()
                 .findById(id);
         if (optional.isPresent()) {
-            return optional.get();
+            Optimisation optimisation = optional.get();
+            if (optimisation != null) {
+                optimisation.setRecommendations(null);
+            }
+            return optimisation;
         }
         return null;
     }

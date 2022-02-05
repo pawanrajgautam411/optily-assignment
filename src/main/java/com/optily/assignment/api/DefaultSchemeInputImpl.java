@@ -15,6 +15,7 @@ public class DefaultSchemeInputImpl implements SchemeInput {
     /**
      * @return
      */
+    @Override
     public CampaignGroup getCampaignGroup() {
         return campaignGroup;
     }
@@ -26,6 +27,7 @@ public class DefaultSchemeInputImpl implements SchemeInput {
     /**
      * @return
      */
+    @Override
     public List<Campaign> getCampaigns() {
         return campaigns;
     }

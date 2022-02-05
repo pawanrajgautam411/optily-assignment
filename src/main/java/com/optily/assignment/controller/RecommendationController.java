@@ -1,6 +1,8 @@
 package com.optily.assignment.controller;
 
 import com.optily.assignment.api.RecommendationService;
+import com.optily.assignment.entity.Optimisation;
+import com.optily.assignment.vo.OptimisationRequestVo;
 import com.optily.assignment.vo.RecommendationResponseVo;
 import com.optily.assignment.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +42,19 @@ public class RecommendationController {
         return new ResponseEntity<>(new ResponseVo(recommendationService.findByCampaignGroupId(campaignGroupId)),
                 HttpStatus.OK);
     }
+
+    /**
+     * @return
+     */
+    @PostMapping("/apply")
+    @ResponseBody
+    public ResponseEntity<ResponseVo> applyRecommendation(
+            @RequestBody OptimisationRequestVo optimisationRequestVo) {
+
+        Optimisation optimisation = recommendationService.applyOptimisation(optimisationRequestVo.getCampaign_group_id(),
+                optimisationRequestVo.getOptimisation_type());
+
+        return new ResponseEntity<>(new ResponseVo(optimisation), HttpStatus.OK);
+    }
+
 }
