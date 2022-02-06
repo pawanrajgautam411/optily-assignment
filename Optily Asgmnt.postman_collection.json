@@ -1,0 +1,317 @@
+{
+	"info": {
+		"_postman_id": "ff083872-4d0f-4aa0-8206-d79ef82f902c",
+		"name": "Optily Asgmnt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "campaign_group - create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/pawanoffice/Documents/intelliJ/optily-assignment/campaigns.csv"
+						},
+						{
+							"key": "campaign_group_name",
+							"value": "Facebook_Cpg_1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/campaign_group/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"campaign_group",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "campaign_group - get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/campaign_group/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"campaign_group",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "campaign_group - find all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/campaign_group/find_all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"campaign_group",
+						"find_all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "campaign - find all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/campaign/find_all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"campaign",
+						"find_all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "campaign - get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/campaign/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"campaign",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "campaign - findByCampaignGroupId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/campaign/campaign_group/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"campaign",
+						"campaign_group",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recommendation - generate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/recommendation/generate/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recommendation",
+						"generate",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recommendation - find",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/recommendation/campaign_group/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recommendation",
+						"campaign_group",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recommendation - apply",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"campaign_group_id\" : 2,\n    \"optimisation_type\" : \"Impression_Based_Optimisation\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recommendation/apply",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recommendation",
+						"apply"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "optimisation - get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/optimisation/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"optimisation",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "optimisation - findByCampaignGroupId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/optimisation/campaign_group/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"optimisation",
+						"campaign_group",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
