@@ -1,11 +1,11 @@
 # Optily Assignment
 
 ### This application has used a list of below techs.
-1. developed using Spring-Boot & Spring-MVC
-2. built with Maven
-3. developed on JAVA-8
-4. used Spring-JPA with Hibernate
-5. developed on MySQL database
+1. Developed using `Spring Boot` & `Spring MVC`
+2. Built with `Maven`
+3. Developed on `Java 8`
+4. Used `Spring JPA` with `Hibernate`
+5. `MySQL` database used for JPA layer
 
 ## 1. Database
 ### 1.1 Import Dump
@@ -34,3 +34,7 @@ The startup class known as SpringBootApplication is located at `com/optily/assig
 
 ### 2.4 Run Command
 Execute command `java -jar target/optily-assignment-v1.jar`
+
+## 3. How to use APIs
+### 3.1 Postman Collection
+Import the postman collection provided with a name `Optily Asgmnt.postman_collection.json` in this repo
