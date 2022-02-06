@@ -31,6 +31,10 @@ class ActionGenerateRecommendation {
      * @return
      */
     protected RecommendationResponseVo generateNow(long campaignGroupId) {
+        if (campaignGroupId <= 0) {
+            throw new IllegalArgumentException("invalid-campaign-group-id");
+        }
+
         Optional<CampaignGroup> optionalCampaignGroup = RepositoryBeanFactory.getCampaignGroupRepository()
                 .findById(campaignGroupId);
 
