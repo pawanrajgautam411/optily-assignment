@@ -52,18 +52,21 @@ class ActionApplyOptimisation {
 
         CampaignGroup campaignGroupDB = optionalCampaignGroup.get();
 
-        Optimisation optimisation = campaignGroupDB.getOptimisations()
+        Optional<Optimisation> optional = campaignGroupDB.getOptimisations()
                 .stream()
                 .filter(opt -> opt.getOptimisationType().equalsIgnoreCase(optimisation_type))
-                .findFirst()
-                .get();
+                .findFirst();
 
-        if (optimisation == null
-                || optimisation.getStatus().equalsIgnoreCase("APPLIED")) {
-            throw new ApplyOptimisationFailedException("optimisation-type ("
-                    + optimisation_type + ") already-applied");
+        if (!optional.isPresent()) {
+            throw new ApplyOptimisationFailedException(
+                    "optimisation-not-found-with-type (" + optimisation_type + ")");
         }
 
+        Optimisation optimisation = optional.get();
+        if (optimisation.getStatus().equalsIgnoreCase("APPLIED")) {
+            throw new ApplyOptimisationFailedException(
+                    "optimisation-type (" + optimisation_type + ") already-applied");
+        }
 
         if (optimisation.getRecommendations() == null
                 || optimisation.getRecommendations().size() <= 0) {
@@ -82,7 +85,6 @@ class ActionApplyOptimisation {
         campaignGroupDB.getCampaigns().clear();
         campaignGroupDB.getCampaigns().addAll(campaignList);
         RepositoryBeanFactory.getCampaignGroupRepository().save(campaignGroupDB);
-
 
         optimisation.setStatus("APPLIED");
         RepositoryBeanFactory.getOptimisationRepository().save(optimisation);
